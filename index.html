@@ -23,7 +23,9 @@
 	<input type="button" value="Submit" onclick="insertRow()" class="input"/>
 </section>
 
-<table id="myTable"" class="table">
+<input type="text" id="search" placeholder="Type to search">
+
+<table id="table"" class="table">
     <tr>
         <th onclick="sortTable(0)">Name</th>
         <th onclick="sortTable(1)">Colour</th>
@@ -34,7 +36,7 @@
 
 <script>
 	function insertRow() {
-		var table = document.getElementById("myTable");
+		var table = document.getElementById("table");
 		var row = table.insertRow(1);
 		var cell1 = row.insertCell(0);
 		var cell2 = row.insertCell(1);
@@ -58,7 +60,7 @@
 	// from https://www.w3schools.com/howto/howto_js_sort_table.asp
     function sortTable(n) {
         var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        table = document.getElementById("myTable");
+        table = document.getElementById("table");
         switching = true;
         //Set the sorting direction to ascending:
         dir = "asc"; 
@@ -110,6 +112,18 @@
 			}
         }
     }
+</script>
+
+<script>
+	var $rows = $('#table tr');
+	$('#search').keyup(function() {
+		var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+		
+		$rows.show().filter(function() {
+			var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+			return !~text.indexOf(val);
+		}).hide();
+	});
 </script>
 
 </body>
