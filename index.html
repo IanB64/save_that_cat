@@ -9,34 +9,40 @@
 
 <h1 class="header">Save That Cat</h1>
 
-<img src="meow.jpg" width="430" height="320" class="img">
+<img src="meow.jpg" width="450" height="340" class="img">
 
-<section>
-	<input id="name" type="text" placeholder="Name" class="input"/>
+<div>
+	<input id="name" type="text" placeholder="Name" class="input" />
 	<br><br>
-	<input id="colour" type="text" placeholder="Colour" class="input"/>
+	<input id="colour" type="text" placeholder="Colour" class="input" />
 	<br><br>
-	<input id="description" type="text" placeholder="Description"  class="input"/>
+	<input id="description" type="text" placeholder="Description"  class="input" />
 	<br><br>
-	<input id="location" type="text" placeholder="Location"  class="input"/>
+	<input id="location" type="text" placeholder="Location"  class="input" />
 	<br><br>
-	<input type="button" value="Submit" onclick="insertRow()" class="input"/>
-</section>
+	<input type="submit" value="Submit" onclick="insertRow()" class="input"/>
+	<br><br>
+	<br><br>
+	<input id="search" type="search" placeholder="Search.." class="input"/>
+</div>
 
-<input type="text" id="search" placeholder="Type to search">
 
-<table id="table"" class="table">
-    <tr>
-        <th onclick="sortTable(0)">Name</th>
-        <th onclick="sortTable(1)">Colour</th>
-        <th onclick="sortTable(2)">Description</th>
-        <th onclick="sortTable(3)">Location</th>
-    <tr>
+<table id="myTable"" class="table">
+	<thead>
+		<tr>
+			<th onclick="sortTable(0)">Name</th>
+			<th onclick="sortTable(1)">Colour</th>
+			<th onclick="sortTable(2)">Description</th>
+			<th onclick="sortTable(3)">Location</th>
+		</tr>
+	</thead>
 </table>
 
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
 	function insertRow() {
-		var table = document.getElementById("table");
+		var table = document.getElementById("myTable");
 		var row = table.insertRow(1);
 		var cell1 = row.insertCell(0);
 		var cell2 = row.insertCell(1);
@@ -55,12 +61,11 @@
 	}
 </script>
 
-
-<<script>
+<script>
 	// from https://www.w3schools.com/howto/howto_js_sort_table.asp
     function sortTable(n) {
         var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-        table = document.getElementById("table");
+        table = document.getElementById("myTable");
         switching = true;
         //Set the sorting direction to ascending:
         dir = "asc"; 
@@ -115,14 +120,14 @@
 </script>
 
 <script>
-	var $rows = $('#table tr');
-	$('#search').keyup(function() {
-		var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+	$(document).ready(function(){
+		$("#search").on("keyup", function() {
+			var value = $(this).val().toLowerCase();
 		
-		$rows.show().filter(function() {
-			var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-			return !~text.indexOf(val);
-		}).hide();
+			$('#myTable tr:not(:first)').filter(function() {
+				$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+			});
+		});
 	});
 </script>
 
